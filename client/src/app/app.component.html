@@ -40,66 +40,7 @@
       <button class="btn btn-success my-2" *ngIf="editMode" (click)="saveTask()">Edit Task</button>
     </div>
   </div>
-  <!-- <div class="row pt-4">
-      <div class="col ">
-          <button class="btn btn-primary btn-sm">Filter By Tags</button>
-          <button class="btn btn-secondary  btn-sm">Show All</button>
-          <button class="btn btn-secondary  btn-sm">Show Completed</button>
-      </div>
-  </div>
-  <div class="row pt-4">
-      <div class="col ">
-          <button class="btn btn-secondary  btn-sm">Tags Group</button>
-          <button class="btn btn-secondary  btn-sm">default</button>
-          <button class="btn btn-secondary  btn-sm">Hobby </button>
-          <button class="btn btn-success  btn-sm">Holiday</button>
-          <button class="btn btn-success text-light  btn-sm">Financial </button>
-          <button class="btn btn-secondary  btn-sm">Fun </button>
-          <button class="btn btn-success  btn-sm">Emergency </button>
-          <button class="btn btn-secondary  btn-sm text-light">Health </button>
-          <button class="btn btn-secondary  btn-sm">Work</button>
-          <button class="btn btn-secondary  btn-sm">Education</button>
-          <button class="btn btn-secondary  btn-sm">Social</button>
-          <button class="btn btn-secondary  btn-sm">Travel</button>
-      </div>
-  </div> -->
-  <div class="row pt-3">
-      <div class="col-12">
-          <table class="table table-bordered table-striped table-sm">
-              <thead>
-                  <tr>
-                      <th class="text-center"><strong>Index</strong></th>
-                      <th class="text-center"><strong>Task Name</strong></th>
-                      <th class="text-center"><strong>Created Date</strong></th>
-                      <th class="text-center"><strong>Due Date</strong></th>
-                      <th class="text-center"><strong>Tags</strong></th>
-                      <th class="text-center"><strong>Functions</strong></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let i of tasks; let j = index">
-                      <td style="text-align: center;">{{ j + 1 }}</td>
-                      <td>
-                          <div class="row">
-                              <div class="col-1">
-                                  <input type="checkbox">
-                              </div>
-                              <div class="col-6">
-                                  {{i.name}}
-                              </div>
-                          </div>
-                      </td>
-                      <td>{{ i.createdDate | date:'dd/MM/yyyy' }}</td>
-                      <td>{{ i.dueDate | date:'dd/MM/yyyy' }}</td>
-                      <td><div>{{ i.tags.join(', ') }}</div></td>
-                      <td class="text-center">
-                          <button class="btn btn-warning btn-sm rounded-btn" (click)="editTask(i._id)">Edit</button>
-                          <button class="btn btn-danger btn-sm rounded-btn" (click)="deleteTask(i._id)">Delete</button>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
 
-  </div>
+  <app-todo-list (emitValues)="receiveValues($event)">
+  </app-todo-list>
 </div>

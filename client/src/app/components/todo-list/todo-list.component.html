@@ -1,0 +1,43 @@
+<div class="row pt-3">
+  <div class="col-12">
+      <table class="table table-bordered table-striped table-sm">
+          <thead>
+              <tr>
+                  <th class="text-center"><strong>Index</strong></th>
+                  <th class="text-center"><strong>Task Name</strong></th>
+                  <th class="text-center"><strong>Created Date</strong></th>
+                  <th class="text-center"><strong>Due Date</strong></th>
+                  <th class="text-center"><strong>Tags</strong></th>
+                  <th class="text-center"><strong>Status</strong></th>
+                  <th class="text-center"><strong>Functions</strong></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let i of tasks; let j = index">
+                  <td style="text-align: center;">{{ j + 1 }}</td>
+                  <td>
+                      <div class="row">
+                          <div class="col-1">
+                              <input type="checkbox">
+                          </div>
+                          <div class="col-6">
+                              {{i.name}}
+                          </div>
+                      </div>
+                  </td>
+                  <td>{{ i.createdDate | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ i.dueDate | date:'dd/MM/yyyy' }}</td>
+                  <td><div>{{ i.tags.join(', ') }}</div></td>
+                  <td>
+                    <div *ngIf="!i.isCompleted">In Progress</div>
+                    <div *ngIf="i.isCompleted">Completed</div>
+                  </td>
+                  <td class="text-center">
+                      <button class="btn btn-warning btn-sm rounded-btn" (click)="editTask(i._id)">Edit</button>
+                      <button class="btn btn-danger btn-sm rounded-btn" (click)="deleteTask(i._id)">Delete</button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

@@ -15,7 +15,7 @@ import { MasterService } from './services/master.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   // constructor(private master: MasterService) {}
   master = inject(MasterService)
 
@@ -23,16 +23,6 @@ export class AppComponent implements OnInit {
   tasks: ITask[] = []
   editMode: boolean = false
   availableTags: string[] = ['Hobby', 'Holiday', 'Financial', 'Fun', 'Emergency', 'Health', 'Work', 'Education', 'Social', 'Travel']
-
-  ngOnInit(): void {
-      this.getTasks()
-  }
-
-  getTasks() {
-    this.master.getData().subscribe((res: ITaskResponse) => {
-      this.tasks = res.data
-    })
-  }
 
   toggleTag(tag: string) {
     const idx = this.taskModel.tags.indexOf(tag)
@@ -54,29 +44,11 @@ export class AppComponent implements OnInit {
     })
   }
 
-  dateFormatterForDisplay(date: Date, id: string) {
-    setTimeout(() => {
-      const dat = new Date(date);
-      const day = ('0' + dat.getDate()).slice(-2);
-      const month = ('0' + (dat.getMonth() + 1)).slice(-2);
-      const today = dat.getFullYear() + '-' + (month) + '-' + (day);
-      (<HTMLInputElement>document.getElementById(id)).value = today;
-    }, 1000)
-  }
-
   idOfTask: string = ''
-  editTask(id: string) {
-    this.editMode = true
-    this.master.getDatabyId(id).subscribe((res: ITaskResponse3) => {
-      if (res.result) {
-        this.taskModel = res.data;
-        this.idOfTask = res.data._id
-        this.dateFormatterForDisplay(res.data.createdDate, 'create-date')
-        this.dateFormatterForDisplay(res.data.dueDate, 'due-date')
-      } else {
-        alert('Failed to fetch task')
-      }
-    })
+  receiveValues(data: {editMode: boolean, taskModel: Task, idOfTask: string}) {
+    this.editMode = data.editMode
+    this.taskModel = data.taskModel
+    this.idOfTask = data.idOfTask
   }
 
   saveTask() {
@@ -86,17 +58,6 @@ export class AppComponent implements OnInit {
         window.location.reload()
       } else {
         alert('Failed to update task')
-      }
-    })
-  }
-
-  deleteTask(id: string) {
-    this.master.deleteData(id).subscribe((res: ITaskResponse2) => {
-      if (res.result) {
-        alert(res.message)
-        window.location.reload()
-      } else {
-        alert('Failed to delete task')
       }
     })
   }
